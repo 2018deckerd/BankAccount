@@ -29,7 +29,7 @@ public class BankAccount {
 	}
 	
 	public static double getBalance() {
-		return amount;
+		return balance;
 	}
 	
 	/*
