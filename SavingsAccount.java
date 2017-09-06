@@ -6,8 +6,8 @@
 public class SavingsAccount extends BankAccount {
 	
 
-	public SavingsAccount(int accountNumber, double amount) {
-		super(accountNumber, amount);
+	public SavingsAccount(String name, int accountNumber) {
+		super(name, accountNumber);
 	
 	}
 

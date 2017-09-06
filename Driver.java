@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -10,55 +11,64 @@ public class Driver {
 	private static boolean quit = false;
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-		CheckingAccount ca = new CheckingAccount(CheckingAccount.getAccountNumber(), CheckingAccount.getAmount());
+		String[] names = new String[99];
+		int[] bankAccount = new int[99];
+		double[] amount = new double[99];
+		CheckingAccount ca = new CheckingAccount(CheckingAccount.getName(), CheckingAccount.getAccountNumber());
+		SavingsAccount sa = new SavingsAccount(SavingsAccount.getName(), SavingsAccount.getAccountNumber());
+		System.out.println("Enter the total number of accounts you have. (Defines array size)");
+		int size = scanner.nextInt();
+		for (int i = 0; i < size; i = i + 1) {
+			bankAccount = new int[size];
+			System.out.println("Please enter the name of account number " + (i + 1) + ".");
+			names[i] = scanner.next();
+		}
+		for (int i = 0; i < size; i++) {
+			System.out.println("Please enter the account number for " + names[i] + "'s account.");
+			bankAccount[i] = scanner.nextInt();
+			System.out.println("Thank you.");
+		}
 		while (quit != true) {
 			System.out.println("What type of banking account do you have? Default options are Checking or Savings account.");
-			String accountType = scanner.nextLine();
+			String accountType = scanner.next();
 			if (accountType.equalsIgnoreCase("Checking")) {
-			int checkingStore[];
-			checkingStore = new int[999];
 			System.out.println("Please select an option by entering the first letter of the choice. For instance,"
 					+ " to make a deposit, enter D.");
 			System.out.println("D)eposit\nW)ithdrawl\nM)onth end\nQ)uit");
-			String option = scanner.nextLine();
+			String option = scanner.next();
 			if (option.equalsIgnoreCase("D")) {
-				System.out.println("Please enter the account number: ");
-				// creates a history array of accountNumbers
-				for (int i = 0; i < 999; i++) {
-					checkingStore[i] = Integer.parseInt(scanner.nextLine());
-				for (int j = 0; j < 999; j++) {
-				if  (CheckingAccount.getAccountNumber() == checkingStore[j]) {
-						System.out.println("This account is in our system. We will add your new deposit to the current balance.");
+				System.out.println("Please enter the account number.");
+				CheckingAccount.setAccountNumber(scanner.nextInt());
+				for (int i = 0; i < size; i++) {
+				if (bankAccount[i] == CheckingAccount.getAccountNumber()) {
 						System.out.println("Please enter the amount you desire to deposit.: ");
-						CheckingAccount.setAmount(Double.parseDouble(scanner.nextLine()));
-						double balance = CheckingAccount.getAmount() + CheckingAccount.getBalance();
-						CheckingAccount.setBalance(balance);
-						System.out.println("Your new balance is: " + CheckingAccount.getBalance());
-				} else {
-					System.out.println("This is a new bank account or was not the same as the previously entered account.\nIt will be added to the history or the balance will be added cumulatively.");
-					CheckingAccount.setAccountNumber(checkingStore[j]);
+						CheckingAccount.setAmount(Double.parseDouble(scanner.next()));
+						amount[i] = amount[i] + CheckingAccount.getAmount();
+						CheckingAccount.transaction();
+						System.out.println("Your balance is: " + (amount[i] - CheckingAccount.getTFee()));
+					} else if (bankAccount[i] != CheckingAccount.getAccountNumber()) {
+					
 				}
-					System.out.println("Please enter the amount you desire to deposit.: ");
-					CheckingAccount.setAmount(Double.parseDouble(scanner.nextLine()));
-					double balance = CheckingAccount.getAmount();
-					CheckingAccount.setBalance(balance);
-					System.out.println("Your new balance is: " + CheckingAccount.getBalance());
 				}
-			}
-				} else if (option.equalsIgnoreCase("W")) {
+			} else if (option.equalsIgnoreCase("W")) {
+				System.out.println("Please enter your name.");
+				BankAccount.setName(scanner.nextLine());
 				System.out.println("Please enter the account number: ");
 				CheckingAccount.setAccountNumber(Integer.parseInt(scanner.nextLine()));
 				System.out.println("Please enter the amount you desire to withdraw.: ");
 				CheckingAccount.setAmount(Double.parseDouble(scanner.nextLine()));
-				System.out.println(CheckingAccount.getBalance());
-				CheckingAccount.setBalance(CheckingAccount.getBalance() - CheckingAccount.getAmount());
+				CheckingAccount.transaction();
+				CheckingAccount.setBalance(CheckingAccount.getBalance() - CheckingAccount.getAmount() - CheckingAccount.getTFee());
+		
 				System.out.println("Your balance is: " + CheckingAccount.getBalance());
 			} else if (option.equalsIgnoreCase("M")) {
-				
+				CheckingAccount.monthEnd();
+				System.out.println("Transaction count cleared.\nYour balance is: " + CheckingAccount.getBalance());
 			} else {
 				quit = true;
 			}
-		}
+			}
+		 
 			
 			if (accountType.equalsIgnoreCase("Savings")) {
 				System.out.println("Please select an option by entering the first letter of the choice. For instance,"
@@ -86,9 +96,8 @@ public class Driver {
 					quit = true;
 				}
 		
-		}
-		
+			}
 	}
-
- }
+  }
+ 
 }
