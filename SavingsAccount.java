@@ -11,8 +11,11 @@ public class SavingsAccount extends BankAccount {
 	
 	}
 
-
-
+	public int computeInterest(int monthlyBalance) {
+		int value = monthlyBalance * BankAccount.interestRate;
+		return value;
+	}
+	
 	public void monthEnd() {
 		
 	}

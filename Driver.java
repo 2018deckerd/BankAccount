@@ -44,26 +44,30 @@ public class Driver {
 						System.out.println("Please enter the amount you desire to deposit.: ");
 						CheckingAccount.setAmount(Double.parseDouble(scanner.next()));
 						amount[i] = amount[i] + CheckingAccount.getAmount();
-						CheckingAccount.transaction();
-						System.out.println("Your balance is: " + (amount[i] - CheckingAccount.getTFee()));
+						CheckingAccount.transaction(CheckingAccount.getAccountNumber());
+						System.out.println("Your balance is: " + (amount[i] - CheckingAccount.getTFee(CheckingAccount.getAccountNumber())));
 					} else if (bankAccount[i] != CheckingAccount.getAccountNumber()) {
 					
 				}
 				}
 			} else if (option.equalsIgnoreCase("W")) {
-				System.out.println("Please enter your name.");
-				BankAccount.setName(scanner.nextLine());
 				System.out.println("Please enter the account number: ");
-				CheckingAccount.setAccountNumber(Integer.parseInt(scanner.nextLine()));
+				CheckingAccount.setAccountNumber(Integer.parseInt(scanner.next()));
+				for (int i = 0; i < size; i++) {
 				System.out.println("Please enter the amount you desire to withdraw.: ");
-				CheckingAccount.setAmount(Double.parseDouble(scanner.nextLine()));
-				CheckingAccount.transaction();
-				CheckingAccount.setBalance(CheckingAccount.getBalance() - CheckingAccount.getAmount() - CheckingAccount.getTFee());
-		
+				CheckingAccount.setAmount(Double.parseDouble(scanner.next()));
+				amount[i] = amount[i] - CheckingAccount.getAmount();
+				CheckingAccount.transaction(CheckingAccount.getTFee(CheckingAccount.getAccountNumber()));
+				CheckingAccount.setBalance(CheckingAccount.getBalance() - CheckingAccount.getAmount() - CheckingAccount.getTFee(CheckingAccount.getTFee(CheckingAccount.getAccountNumber())));
 				System.out.println("Your balance is: " + CheckingAccount.getBalance());
+			}
 			} else if (option.equalsIgnoreCase("M")) {
 				CheckingAccount.monthEnd();
-				System.out.println("Transaction count cleared.\nYour balance is: " + CheckingAccount.getBalance());
+				System.out.println("Transaction count cleared.");
+				for (int i = 0; i < size; i++) {
+					System.out.println("The balance of " + names[i] + "'s account is: " + amount[i]);
+				}
+				
 			} else {
 				quit = true;
 			}
