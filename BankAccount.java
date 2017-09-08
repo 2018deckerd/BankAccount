@@ -5,21 +5,25 @@
  */
 public class BankAccount {
 	
+	static String name;
 	static int accountNumber = 1; // account number of bank account
 	static double amount; // amount of deposit or withdrawal
-	static int interestRate = 6;
 	static double balance;
 	
 	
-	public BankAccount(int accountNumber, double amount) {
-		this.setAccountNumber(accountNumber);
-		this.amount = amount;
+	public BankAccount(String name, int accountNumber) {
+		this.name = name;
+		this.accountNumber = accountNumber;
 	}
 	
 	/*
 	 * Getter methods for the class
 	 */
 
+	public static String getName() {
+		return name;
+	}
+	
 	public static int getAccountNumber() {
 		return accountNumber;
 	}
@@ -36,6 +40,10 @@ public class BankAccount {
 	 * Setter methods for the class
 	 */
 
+	public static void setName(String n) {
+		name = n;
+	}
+	
 	public static void setAccountNumber(int an) {
 		accountNumber = an;
 	}
@@ -49,10 +57,10 @@ public class BankAccount {
 	}
 
 	/*
-	 * This method prints out some general information about the vehicle
+	 * This method prints out some general information about the bank account
 	 */
-	public double getAccountBalance() {
-		return amount;
+	public String toString() {
+		return "Name: " + name + "\nAccount Number: " + accountNumber + "\nBalance: " + balance;
 	}
 }
 
